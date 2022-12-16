@@ -14,13 +14,22 @@ def filter_property(name, text):
     logging.info(f'not property: {name}')
     return False
 
+BAN_WORDS = ['купить в магазине доменных имен REG.RU', 'Хостинг-провайдер TimeWeb.ru']
+
+def filter_ban_words(name, text):
+    for word in BAN_WORDS:
+        if word in text:
+            logging.info(f'ban word: {name}')
+            return False
+    return True
+
 def filter_empty_file(name, text):
     if len(text) < 2:
         return False
     return True
 
 
-FILTERS = [filter_empty_file, filter_property]
+FILTERS = [filter_empty_file, filter_property, filter_ban_words]
 
 
 def all_filters(name_text):
@@ -46,17 +55,22 @@ def read_file(name):
 def read_and_filter(name):
     return all_filters(read_file(name))
 
+def copy_file(name):
+    shutil.copy(f'urlshtml/{name}', f'out/filtered_sites/{name}')
 
 def main():
+    shutil.rmtree('out/filtered_sites', ignore_errors=True)
+
     names = os.listdir('urlshtml')
-    with Pool(5) as p:
+    with Pool(10) as p:
         filter_list = p.map(read_and_filter, os.listdir('urlshtml'))
     
     good_names = list(itertools.compress(names, filter_list))
     logging.info(f'WAS {len(names)} -> BECAME {len(good_names)}')
 
-    for name in good_names:
-        shutil.copy(f'urlshtml/{name}', f'out/filtered_sites/{name}')
+    os.mkdir('out/filtered_sites')
+    with Pool(10) as p:
+        p.map(copy_file, good_names)
 
 
 if __name__ == '__main__':
