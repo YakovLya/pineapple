@@ -16,14 +16,18 @@ def read_list_from_file(file_name):
 BAD_WORDS_EMAIL = ['pulscen.ru']
 
 def check_email(string):
-    if re.match(r'[\w\.-]+@[\w\.-]+', string):
-        return True
-    return False
+    if not re.match(r'[\w\.-]+@[\w\.-]+', string):
+        return False
+    if any(word in string for word in BAD_WORDS_EMAIL):
+        return False
+    return True
 
 
 def is_valid_phone(phone):
     return re.match(r'(\+[0-9]+\s*)?(\([0-9]+\))?[\s0-9\-]+[0-9]+', phone)
 
+# ООО «Центр недвижимости от Сбербанка»
+BAD_OGRN = ['1157746652150']
 
 def check_out_data(data_list):
     for el in data_list:
@@ -36,7 +40,7 @@ def check_out_data(data_list):
                 print('Bad phone: ', el)
                 break
         elif el[-1] == 'ОГРН':
-            if not el[1].isdigit() or not (len(el[1]) == 13 or len(el[1]) == 15):
+            if not el[1].isdigit() or not (len(el[1]) == 13 or len(el[1]) == 15) or int(el[1]) in BAD_OGRN:
                 print('Bad ОГРН: ', el)
                 break
         elif el[-1] == 'ИНН':
@@ -48,20 +52,27 @@ def check_out_data(data_list):
             break
 
 def clear_data(data_list):
+    res = list()
+
     for el in data_list:
         if el[-1] == 'phone':
             el[1] = re.sub(r'[^0-9]', '', el[1])
         elif el[-1] == 'email':
+            if any(word in el[1] for word in BAD_WORDS_EMAIL):
+                continue
             el[1] = el[1].lower()
         elif el[-1] == 'ОГРН':
+            if any(word in el[1] for word in BAD_OGRN):
+                continue
             el[1] = re.sub(r'[^0-9]', '', el[1])
         elif el[-1] == 'ИНН':
             el[1] = re.sub(r'[^0-9]', '', el[1])
         
         if el[1] == '':
-            data_list.remove(el)
             continue
-    return data_list
+        
+        res.append(el)
+    return res
 
 def convert_data_to_dict(data_list):
     res = {}
@@ -72,7 +83,7 @@ def convert_data_to_dict(data_list):
     return res
 
 def main():
-    data_list = clear_data(read_list_from_file('out/out.txt'))
+    data_list = clear_data(clear_data(read_list_from_file('out/out.txt')))
     check_out_data(data_list)
     with open('out/out.json', 'w', encoding='utf-8') as f:
         f.write(json.dumps(convert_data_to_dict(data_list)))
