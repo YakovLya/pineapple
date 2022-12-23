@@ -5,11 +5,12 @@ import itertools
 import shutil
 import coloredlogs
 
-KEY_WORDS = ['недвиж', 'дом', 'квартир', 'площад', 'build', 'property', 'apartmen', 'строит', 'апартамен']
+KEY_WORDS = ['недвиж', 'дом', 'квартир', 'площад', 'build', 'property', 'apartmen', 'строит', 'апартамен', 'resident', 'flat', 'house', 'home']
 
 def filter_property(name, text):
+    text_low = text.lower()
     for word in KEY_WORDS:
-        if word in text:
+        if word.lower() in text_low:
             return True
     logging.info(f'not property: {name}')
     return False
@@ -17,8 +18,9 @@ def filter_property(name, text):
 BAN_WORDS = ['купить в магазине доменных имен reg.ru', 'хостинг-провайдер timeweb.ru', 'домен', 'спецтех', 'доставка', '«ГДЕЭТОТДОМ.РУ»', 'Строительные услуги', 'domain']
 
 def filter_ban_words(name, text):
+    text_low = text.lower()
     for word in BAN_WORDS:
-        if word in text:
+        if word.lower() in text_low:
             logging.info(f'ban word: {name}')
             return False
     return True
