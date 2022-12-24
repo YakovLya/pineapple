@@ -3,7 +3,6 @@ import os
 from multiprocessing import Pool
 import itertools
 import shutil
-import coloredlogs
 
 KEY_WORDS = ['недвиж', 'дом', 'квартир', 'площад', 'build', 'property', 'apartmen', 'строит', 'апартамен', 'resident', 'flat', 'house', 'home']
 
