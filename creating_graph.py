@@ -4,6 +4,7 @@ import numpy as np
 import pickle
 from multiprocessing import Pool
 import itertools
+from time import sleep
 
 data = {}
 G = nx.Graph()
@@ -45,12 +46,16 @@ def main():
 
     while len(out_arr) < len(data.keys()):
         pass
+
+    sleep(5)
     
     G.add_edges_from(list(itertools.chain(*out_arr)))
 
     print(G.number_of_edges(), G.number_of_nodes())
     with open('out/graph.pickle', 'wb') as f:
         pickle.dump(G, f)
+    
+    hnd_connections.close()
 
 
 if __name__ == '__main__':
