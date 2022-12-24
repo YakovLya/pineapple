@@ -1,8 +1,10 @@
 results
 urlshtml
-out
+out/graph.pickle
+out/filtered_sites
+out/filtered_sites.rar
+out/connections.csv
+out/out.json
 logs
 .idea
 out.txt
-!/out/nx.html
-!/out/nx.png
