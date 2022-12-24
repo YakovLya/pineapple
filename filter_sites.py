@@ -14,7 +14,7 @@ def filter_property(name, text):
     logging.info(f'not property: {name}')
     return False
 
-BAN_WORDS = ['купить в магазине доменных имен reg.ru', 'хостинг-провайдер timeweb.ru', 'домен', 'спецтех', 'доставка', '«ГДЕЭТОТДОМ.РУ»', 'Строительные услуги', 'domain']
+BAN_WORDS = ['купить в магазине доменных имен reg.ru', 'хостинг-провайдер timeweb.ru', 'домен', 'спецтех', 'доставка', '«ГДЕЭТОТДОМ.РУ»', 'Строительные услуги', 'domain', '84955801111', '88005553478']
 
 def filter_ban_words(name, text):
     text_low = text.lower()

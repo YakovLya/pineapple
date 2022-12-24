@@ -36,7 +36,7 @@ def main():
     with open('out/connections.csv', 'w') as f:
         f.write(f'node1\tnode2\tvalue\n')
     
-    hnd_connections = open('out/connections.csv', 'a')
+    hnd_connections = open('out/connections.csv', 'a', encoding='utf-8')
 
     for el in data.keys():
         G.add_edges_from(make_edges(el))
