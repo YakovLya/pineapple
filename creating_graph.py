@@ -38,18 +38,18 @@ def main():
     
     hnd_connections = open('out/connections.csv', 'a')
 
-    # for el in data.keys():
-    #     make_edges(el)
+    for el in data.keys():
+        G.add_edges_from(make_edges(el))
 
-    with Pool(8) as p:
-        out_arr = p.map(make_edges, data.keys())
+    # with Pool(8) as p:
+    #     out_arr = p.map(make_edges, data.keys())
 
-    while len(out_arr) < len(data.keys()):
-        pass
+    # while len(out_arr) < len(data.keys()):
+    #     pass
 
-    sleep(15)
+    # sleep(15)
     
-    G.add_edges_from(list(itertools.chain(*out_arr)))
+    # G.add_edges_from(list(itertools.chain(*out_arr)))
 
     print(G.number_of_edges(), G.number_of_nodes())
     with open('out/graph.pickle', 'wb') as f:
