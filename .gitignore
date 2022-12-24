@@ -4,5 +4,5 @@ out
 logs
 .idea
 out.txt
-!out/nx.html
-!out/nx.png
+!/out/nx.html
+!/out/nx.png
