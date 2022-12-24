@@ -3,6 +3,8 @@
 ### Goal
 Get information and analyze data of russian construction businesses
 
+[Presentation](https://docs.google.com/presentation/d/1Qa9COM96zhSza3z3jHKl1ym9X6J-pkDamn4FcZok4Ig/edit?usp=sharing)
+
 ---
 ### Credits
 ```
