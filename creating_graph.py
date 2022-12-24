@@ -47,7 +47,7 @@ def main():
     while len(out_arr) < len(data.keys()):
         pass
 
-    sleep(5)
+    sleep(15)
     
     G.add_edges_from(list(itertools.chain(*out_arr)))
 
